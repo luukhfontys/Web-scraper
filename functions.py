@@ -23,8 +23,12 @@ def get_car_models():
         text_list.append(text_content)
 
     filtered_text_list = [item for item in text_list if "|" in item]
-    result_dict = {item.split(' | ')[0]: item.split(' | ')[1].split(', ') for item in filtered_text_list}
-    result_dict = {item.split(' | ')[0].replace('.', '').replace(' ', '-'): [model.replace('.', '').replace(' ', '-') for model in item.split(' | ')[1].split(', ')] for item in filtered_text_list}
+
+    result_dict = {
+        item.split(' | ')[0].replace('.', '').replace(' ', '-').replace('ë', 'e'): 
+        [model.replace('.', '').replace(' ', '-').replace('ë', 'e') for model in item.split(' | ')[1].split(', ')] 
+        for item in filtered_text_list
+    }
     
     return result_dict
 
