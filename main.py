@@ -65,7 +65,8 @@ def Keuze():
             merken = [car["brand"] for car in st.session_state.Geselecteerde_autos]
             modellen = [car["model"] for car in st.session_state.Geselecteerde_autos]
             progress_bar = st.progress(0)
-            elements, merkenindex, modellenindex, total_elements = get_elements(merken, modellen, importEU)
+            with st.spinner('Looking for matches...'):
+                elements, merkenindex, modellenindex, total_elements = get_elements(merken, modellen, importEU)
             st.success(f'{total_elements} matches found!')
             df = scrape_data_df(elements, merkenindex, modellenindex, progress_bar)
             st.dataframe(df)
