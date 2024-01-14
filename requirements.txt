@@ -1,0 +1,11 @@
+streamlit
+pandas
+numpy
+matplotlib
+plotly
+requests
+bs4
+xlsxwriter
+io
+pyxlsb
+re
