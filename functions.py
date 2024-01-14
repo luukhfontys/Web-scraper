@@ -28,11 +28,13 @@ def get_car_models():
     
     return result_dict
 
-def construct_search_query(make, model=None, bmin=None, bmax=None, importEU=False):
+def construct_search_query(make, model=None, bmin=None, bmax=None, importEU=False, elektrisch=False):
     query_params = {'bmin': bmin, 'bmax': bmax}
 
-    if model:
+    if model and elektrisch:
         # If model is specified, include it in the query
+        search_query = f"{make}/{model}/elektrisch"
+    elif model:
         search_query = f"{make}/{model}"
     else:
         # If model is not specified, only include the make in the query
@@ -86,12 +88,12 @@ def extract_properties_of_car(car):
 def extract_page_info(page):
     return page.find_all(attrs={"data-testid": "occasion-item"})
 
-def get_elements(merken: list, modellen: list, importEU: bool):
+def get_elements(merken: list, modellen: list, importEU: bool, elektrisch: bool):
     elements_list = []
     merkenindex = []
     modellenindex = []
     for merk, model in zip(merken, modellen):
-        url = construct_search_query(merk, model=model, bmin=None, bmax=None)
+        url = construct_search_query(merk, model=model, elektrisch = elektrisch, bmin=None, bmax=None)
         html = requests.get(url)
         page = BeautifulSoup(html.content, 'html.parser')
         elements = extract_page_info(page)
@@ -167,7 +169,8 @@ def scrape_data_df(element_list: list, merkenindex: list, modellenindex: list, p
 # # x= 1
 # url = get_elements(merken, modellen, importEU=True)
 
-# x = 1
+x = 1
+x=2
 # df = scrape_data_df(url)
 
 # df.to_excel(f'Resultaat_{merk}_{model}.xlsx')

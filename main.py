@@ -59,14 +59,15 @@ def Keuze():
             lijst_temp = st.session_state.Geselecteerde_autos
             lijst_temp.pop(int(remove_select[0]))
             st.rerun()
-            
+        
+        filteropelektrisch = st.checkbox('Alleen op elektrische auto\'s filteren?')
         importEU = st.checkbox('EU import auto\'s ook meenemen?')
         if st.button('Start scrape'):
             merken = [car["brand"] for car in st.session_state.Geselecteerde_autos]
             modellen = [car["model"] for car in st.session_state.Geselecteerde_autos]
             progress_bar = st.progress(0)
             with st.spinner('Looking for matches...'):
-                elements, merkenindex, modellenindex, total_elements = get_elements(merken, modellen, importEU)
+                elements, merkenindex, modellenindex, total_elements = get_elements(merken, modellen, importEU, filteropelektrisch)
             st.success(f'{total_elements} matches found!')
             df = scrape_data_df(elements, merkenindex, modellenindex, progress_bar)
             st.dataframe(df)
