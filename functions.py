@@ -114,16 +114,16 @@ def get_elements(merken: list, modellen: list, importEU: bool):
             page = BeautifulSoup(html.content, 'html.parser')
             elements = extract_page_info(page)
         
-        i = 2
-        while len(elements) > 0:
-            elements_list.append(elements)
-            urlpage = url + '&page=' + str(i)
-            html = requests.get(urlpage)
-            page = BeautifulSoup(html.content, 'html.parser')
-            elements = extract_page_info(page)
-            i += 1
-            merkenindex.append(merk)
-            modellenindex.append(model)
+            i = 2
+            while len(elements) > 0:
+                elements_list.append(elements)
+                urlpage = url + '&page=' + str(i)
+                html = requests.get(urlpage)
+                page = BeautifulSoup(html.content, 'html.parser')
+                elements = extract_page_info(page)
+                i += 1
+                merkenindex.append(merk)
+                modellenindex.append(model)
             
     total_elements = sum(len(inner_list) for inner_list in elements_list)
     return elements_list, merkenindex, modellenindex, total_elements
@@ -157,16 +157,17 @@ def scrape_data_df(element_list: list, merkenindex: list, modellenindex: list, p
 # Testing:
 
 
-x=1
+# x=1
 
-merken = ['tesla', 'volkswagen']
-modellen = ['model-3', 'ID3']
+# merken = ['tesla']
+# modellen = ['model-3']
 
-# test = get_elements(merken, modellen)
+# # test = get_elements(merken, modellen)
 
-# x= 1
-# url = construct_search_query(merk, model=model, bmin=None, bmax=None)
+# # x= 1
+# url = get_elements(merken, modellen, importEU=True)
 
+# x = 1
 # df = scrape_data_df(url)
 
 # df.to_excel(f'Resultaat_{merk}_{model}.xlsx')
