@@ -6,6 +6,4 @@ plotly
 requests
 beautifulsoup4
 xlsxwriter
-io
 pyxlsb
-re
