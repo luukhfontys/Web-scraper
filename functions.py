@@ -10,12 +10,24 @@ def get_car_models():
     """"Haalt alle modellen autos van gaspedaal.nl af en returned dictionary met {'Merk': ['Modellen', ...]}"""
     url = 'https://www.gaspedaal.nl/blog/autoblog/auto-abc/22-automerken'
     
+        # Session to manage cookies and headers
+    session = requests.Session()
+    
+    # Define headers
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
     }
     
-    html = requests.get(url, headers=headers)
+    # Initial request to get cookies
+    html = session.get(url, headers=headers)
+    
+    # Check if redirected to consent page
+    if 'consent' in html.url:
+        # Extract the consent URL and redirect to it
+        consent_url = html.url
+        session.get(consent_url, headers=headers)
 
+    html = session.get(url, headers=headers)
     s = BeautifulSoup(html.content, 'html.parser')
 
     # Vind alle auto merken met model.
