@@ -9,7 +9,12 @@ from pyxlsb import open_workbook as open_xlsb
 def get_car_models():
     """"Haalt alle modellen autos van gaspedaal.nl af en returned dictionary met {'Merk': ['Modellen', ...]}"""
     url = 'https://www.gaspedaal.nl/blog/autoblog/auto-abc/22-automerken'
-    html = requests.get(url)
+    
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+    }
+    
+    html = requests.get(url, headers=headers)
 
     s = BeautifulSoup(html.content, 'html.parser')
 
@@ -175,6 +180,7 @@ def scrape_data_df(element_list: list, merkenindex: list, modellenindex: list, p
 
 x = 1
 x=2
+result = get_car_models()
 # df = scrape_data_df(url)
 
 # df.to_excel(f'Resultaat_{merk}_{model}.xlsx')
